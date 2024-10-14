@@ -116,6 +116,7 @@ public class BlackJack {
     JPanel buttonPanel = new JPanel();
     JButton hitButton = new JButton("HIT");
     JButton standButton = new JButton("STAND");
+    JButton newGameButton = new JButton("NEW GAME");
 
     //constructor
     BlackJack(){
@@ -135,6 +136,8 @@ public class BlackJack {
         buttonPanel.add(hitButton);
         standButton.setFocusable(false);
         buttonPanel.add(standButton);
+        newGameButton.setFocusable(false);
+        buttonPanel.add(newGameButton);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         hitButton.addActionListener(new ActionListener(){
@@ -162,6 +165,15 @@ public class BlackJack {
                         gamePanel.repaint();
                     }
                 });
+                gamePanel.repaint();
+            }
+        });
+        newGameButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                startGame();
+                hitButton.setEnabled(true);
+                standButton.setEnabled(true);
                 gamePanel.repaint();
             }
         });

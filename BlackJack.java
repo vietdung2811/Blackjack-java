@@ -61,27 +61,33 @@ public class BlackJack {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             try{
+                //result GUI
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Arial", Font.BOLD, 20));
+                g.drawString("Dealer: "+dealerSum, 20, 20);
+                g.drawString("Player: "+playerSum, 20, 25 + cardHeight + 20);
+
                 //hidden card
                 Image hiddenCardImage = new ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
-                g.drawImage(hiddenCardImage, 20, 20, cardWidth, cardHeight, null);
+                g.drawImage(hiddenCardImage, 20, 25, cardWidth, cardHeight, null);
                 if (!standButton.isEnabled()){
                     String cardName = hiddenCard.value +"-"+ hiddenCard.type + ".png";
                     Image cardImage = new ImageIcon(getClass().getResource("./cards/" + cardName)).getImage();
-                    g.drawImage(cardImage, 20, 20, cardWidth, cardHeight, null); 
+                    g.drawImage(cardImage, 20, 25, cardWidth, cardHeight, null); 
                 }
                 
                 //dealer card
                 for (int i = 0; i<dealerHand.size(); i++){
                     String cardName = dealerHand.get(i).value +"-"+ dealerHand.get(i).type + ".png";
                     Image cardImage = new ImageIcon(getClass().getResource("./cards/" + cardName)).getImage();
-                    g.drawImage(cardImage, 20 + (cardWidth + 20) * (i+1), 20, cardWidth, cardHeight, null); 
+                    g.drawImage(cardImage, 20 + (cardWidth + 20) * (i+1), 25, cardWidth, cardHeight, null); 
                 }
 
                 //player card
                 for (int i = 0; i<playerHand.size(); i++){
                     String cardName = playerHand.get(i).value +"-"+ playerHand.get(i).type + ".png";
                     Image cardImage = new ImageIcon(getClass().getResource("./cards/" + cardName)).getImage();
-                    g.drawImage(cardImage, 20 + (cardWidth + 20) * i, 20 + cardHeight + 20, cardWidth, cardHeight, null); 
+                    g.drawImage(cardImage, 20 + (cardWidth + 20) * i, 25 + cardHeight + 25, cardWidth, cardHeight, null); 
                 }
 
                 if (!standButton.isEnabled()){
@@ -138,6 +144,7 @@ public class BlackJack {
         buttonPanel.add(standButton);
         newGameButton.setFocusable(false);
         buttonPanel.add(newGameButton);
+        newGameButton.setEnabled(false);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         hitButton.addActionListener(new ActionListener(){
@@ -155,6 +162,7 @@ public class BlackJack {
                     public void actionPerformed(ActionEvent e) {
                         hitButton.setEnabled(false);
                         standButton.setEnabled(false);
+                        newGameButton.setEnabled(true);
                         
                         while (dealerSum<17){
                             Card dealerCard = deck.remove(deck.size()-1);
@@ -164,6 +172,7 @@ public class BlackJack {
                         }
                         gamePanel.repaint();
                     }
+    
                 });
                 gamePanel.repaint();
             }
@@ -174,6 +183,7 @@ public class BlackJack {
                 startGame();
                 hitButton.setEnabled(true);
                 standButton.setEnabled(true);
+                newGameButton.setEnabled(false);
                 gamePanel.repaint();
             }
         });
